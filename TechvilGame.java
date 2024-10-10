@@ -1,10 +1,12 @@
-// java Program to create a simple JWindow 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.*; 
-import javax.swing.*; 
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 class TechvilGame extends JFrame implements ActionListener {
     JPanel north;
@@ -28,20 +30,22 @@ class TechvilGame extends JFrame implements ActionListener {
         south = new JPanel();
         add(south, BorderLayout.SOUTH);
 
+        // Load and add the PNG image to the center panel
+        JLabel pngComponent = new JLabel(new ImageIcon("/Users/natalka/Documents/tue/programming/techvil/levels/level1.png"));
+        pngComponent.setSize(screenSize.width, screenSize.height);
+        center.add(pngComponent);
+
         setVisible(true);
         setResizable(false);
     }
-    
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
-    } 
+        // Handle actions here if needed
+    }
 
     public static void main(String[] args) {
         TechvilGame game = new TechvilGame();
-        Pop p = new Pop();
-    }   
-} 
+        Pop p = new Pop();  // Assuming Pop is implemented elsewhere
+    }
+}
