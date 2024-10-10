@@ -31,7 +31,7 @@ class TechvilGame extends JFrame implements ActionListener {
         add(south, BorderLayout.SOUTH);
 
         // Load and add the PNG image to the center panel
-        JLabel pngComponent = new JLabel(new ImageIcon("/Users/natalka/Documents/tue/programming/techvil/levels/level1.png"));
+        JLabel pngComponent = new JLabel(new ImageIcon("levels/level1.png"));
         pngComponent.setSize(screenSize.width, screenSize.height);
         center.add(pngComponent);
 
