@@ -1,92 +1,50 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
-/* Pop up window. */
 class Pop extends JFrame implements ActionListener {
-    Popup po;
-	JFrame f;
+    // popup
+    Popup p;
+    int width = 400;
+    int height = 400;
 
+    // constructor
+    Pop() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        JFrame f = new JFrame("pop");
 
+        JLabel l = new JLabel("This is a popup");
+        f.setSize(width, height);
+        f.setLocation((screenSize.width - width) / 2, (screenSize.height - height) / 2);
+        f.setResizable(false);
+        f.setUndecorated(true);
 
-	// panel
-	JPanel p;
+        PopupFactory pf = new PopupFactory();
 
-	// popupfactory
-	PopupFactory pf;
+        JPanel p2 = new JPanel();
 
-	// constructor
-	Pop() {
-		// create a frame
-		f = new JFrame("pop");
+        p2.setBackground(Color.red);
+        p2.add(l);
 
-		f.setSize(400, 400);
+        p = pf.getPopup(f, p2, 180, 100);
 
-		pf = new PopupFactory();
+        JButton b = new JButton("click");
 
-		// create a label
-		JLabel l = new JLabel("This is a popup menu");
+        b.addActionListener(this);
 
-		// create a new button
-		JButton b19 = new JButton("OK");
+        JPanel p1 = new JPanel();
 
-		// add action listener
-		b19.addActionListener(this);
+        p1.add(b);
+        f.add(p1);
+        // f.show();
+    }
 
-		try {
-			// set windows look and feel
-			UIManager.setLookAndFeel(UIManager.
-				getSystemLookAndFeelClassName());
-		}
-		catch (Exception e) {
-		}
+    public void actionPerformed(ActionEvent e) {
+        p.show();
+    }
 
-		// create a panel
-		p = new JPanel();
-
-		p.setBackground(Color.blue);
-
-		// create a font
-		Font fo = new Font("BOLD", 1, 14);
-
-		l.setFont(fo);
-
-		// add contents to panel
-		p.add(l);
-		p.add(b19);
-
-		p.setLayout(new GridLayout(2, 1));
-
-		// create a popup
-		po = pf.getPopup(f, p, 180, 100);
-
-		// create a button
-		JButton b = new JButton("click");
-
-		// add action listener
-		b.addActionListener(this);
-
-		// create a panel
-		JPanel p1 = new JPanel();
-
-		p1.add(b);
-		f.add(p1);
-		f.show();
-	}
-
-	// if the button is pressed
-	public void actionPerformed(ActionEvent e)
-	{
-		String d = e.getActionCommand();
-		// if ok button is pressed hide the popup
-		if (d.equals("OK")) {
-			po.hide();
-
-			// create a popup
-			po = pf.getPopup(f, p, 180, 100);
-		} else {
-            po.show();
-        }
-	}
+    // main class
+    public static void main(String args[]) {
+        Pop p = new Pop();
+    }
 }
-
