@@ -1,45 +1,25 @@
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
-class Pop extends JFrame implements ActionListener {
-    /** Pop up. */
-    Popup p;
-    int width = 400;
-    int height = 400;
-
-    /** Constructor. */
-    Pop() {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        JFrame f = new JFrame("pop");
-
-        JLabel l = new JLabel("This is a popup");
-        f.setSize(width, height);
-        f.setLocation((screenSize.width - width) / 2, (screenSize.height - height) / 2);
-        f.setResizable(false);
-        f.setUndecorated(true);
-
-        PopupFactory pf = new PopupFactory();
-
-        JPanel p2 = new JPanel();
-
-        p2.setBackground(Color.red);
-        p2.add(l);
-
-        p = pf.getPopup(f, p2, 180, 100);
-
-        JButton b = new JButton("click");
-
-        b.addActionListener(this);
-
-        JPanel p1 = new JPanel();
-
-        p1.add(b);
-        f.add(p1);
-        f.show();
+class Pop extends JPanel {
+    private ImageIcon imageIcon;
+	
+	/** Load image. */
+	Pop() {
+        imageIcon = new ImageIcon("levels/level1.png");
     }
 
-    public void actionPerformed(ActionEvent e) {
-        p.show();
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        // Draw the image
+        if (imageIcon != null) {
+            g.drawImage(imageIcon.getImage(), 0, 0, getWidth(), getHeight(), this);
+        }
+
+        // Draw the rectangle on top of the image
+        g.setColor(Color.pink);
+        g.fillRect((1280 - 466) / 2, (832) / 2 - 228, 464, 260);
     }
 }
