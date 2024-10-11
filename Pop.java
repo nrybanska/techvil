@@ -3,10 +3,13 @@ import javax.swing.*;
 
 class Pop extends JPanel {
     private ImageIcon imageIcon;
+    private ImageIcon gifIcon;
 	
 	/** Load image. */
 	Pop() {
         imageIcon = new ImageIcon("levels/level1.png");
+        gifIcon = new ImageIcon("levels/Coffee.gif");
+
     }
 
     @Override
