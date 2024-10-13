@@ -1,31 +1,37 @@
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 class TechvilGame extends JFrame {
-    JPanel north;
-    static Pop center;
-    JPanel south;
 
     /** game. */
-    TechvilGame() {
+    public TechvilGame() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
         setTitle("Techvil");
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(1280, 832);
-        setLayout(new BorderLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        north = new JPanel();
-        add(north, BorderLayout.NORTH);
+        // Initialize a pane for the main content
+        JLayeredPane contentPane = new JLayeredPane();
+        setContentPane(contentPane);
 
-        // Use custom panel for drawing
-        center = new Pop();
-        add(center, BorderLayout.CENTER);
+        // Add background to the pane
+        JPanel backgroundPanel = new Background();
+        contentPane.add(backgroundPanel, Integer.valueOf(0));
 
-        south = new JPanel();
-        add(south, BorderLayout.SOUTH);
+        // Add "screen", text and button
+        JPanel popPanel = new Pop();
+        contentPane.add(popPanel, Integer.valueOf(1));
+
+        // Add GIF
+        JPanel gifCoffee = new Gif();
+        contentPane.add(gifCoffee, Integer.valueOf(2));
 
         setVisible(true);
         setResizable(false);
