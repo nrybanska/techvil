@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,16 +11,14 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-class Pop extends JPanel {
-    /** Load image. */
-    private String infoText = "<html> Lorem ipsum dolor sit amet, "
-    +"consectetur adipiscing elit, sed do eiusmod tempor incididunt "
-    +"ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis "
-    +"nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo "
-    +"consequat. Duis aute irure dolor in reprehenderit in voluptate velit </html>";
+class Pop extends JPanel implements ActionListener {
+    JButton okButton;
+    PanelRemoveListener panelRemoveListener;
 
-
-    public Pop() {
+    /** Load the popup panel. */
+    public Pop(PanelRemoveListener panelRemoveListener) {
+        this.panelRemoveListener = panelRemoveListener;
+        
         // Creating a rectangle
         setBackground(Color.blue);
         setOpaque(true);
@@ -51,7 +51,8 @@ class Pop extends JPanel {
         add(textLabel, c);
 
         // Adding Button
-        JButton okButton = new JButton("OK");
+        okButton = new JButton("OK");
+        okButton.addActionListener(this);
 
         // Setting the grid position
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -64,5 +65,12 @@ class Pop extends JPanel {
         c.gridwidth = 1;
 
         add(okButton, c);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == okButton) {
+            panelRemoveListener.removePanel(Pop.this);
+        }
     }
 }

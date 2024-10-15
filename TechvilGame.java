@@ -3,7 +3,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-class TechvilGame extends JFrame {
+class TechvilGame extends JFrame implements PanelRemoveListener {
+    private JLayeredPane contentPane;
 
     /** game. */
     public TechvilGame() {
@@ -18,7 +19,7 @@ class TechvilGame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         // Initialize a pane for the main content
-        JLayeredPane contentPane = new JLayeredPane();
+        contentPane = new JLayeredPane();
         setContentPane(contentPane);
 
         // Add background to the pane
@@ -26,7 +27,7 @@ class TechvilGame extends JFrame {
         contentPane.add(backgroundPanel, Integer.valueOf(0));
 
         // Add "screen", text and button
-        JPanel popPanel = new Pop();
+        JPanel popPanel = new Pop(this);
         contentPane.add(popPanel, Integer.valueOf(1));
 
         // Add GIF
@@ -35,6 +36,13 @@ class TechvilGame extends JFrame {
 
         setVisible(true);
         setResizable(false);
+    }
+
+    @Override
+    public void removePanel(JPanel jPanel) {
+        contentPane.remove(jPanel);
+        contentPane.revalidate();
+        contentPane.repaint();
     }
 
     public static void main(String[] args) {
