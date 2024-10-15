@@ -2,17 +2,21 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 class Pop extends JPanel {
     /** Load image. */
-    private String infoText = "Lorem ipsum dolor sit amet, "
-    +"consectetur adipiscing elit, sed do eiusmod \n tempor incididunt "
-    +"ut labore et dolore magna aliqua. Ut enim ad \n minim veniam, quis "
-    +"nostrud exercitation ullamco laboris nisi ut aliquip \n ex ea commodo "
-    +"consequat. Duis aute irure dolor in reprehenderit in voluptate velit ";
+    private String infoText = "<html> Lorem ipsum dolor sit amet, "
+    +"consectetur adipiscing elit, sed do eiusmod tempor incididunt "
+    +"ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis "
+    +"nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo "
+    +"consequat. Duis aute irure dolor in reprehenderit in voluptate velit </html>";
+
 
     public Pop() {
         // Creating a rectangle
@@ -23,8 +27,16 @@ class Pop extends JPanel {
         GridBagConstraints c = new GridBagConstraints();
         
         // Adding Text
-        JLabel textLabel = new JLabel(infoText);
+        JLabel textLabel = new JLabel();
         textLabel.setForeground(Color.WHITE);
+        //textLabel.setLineWrap(true);
+        try {
+            String content = new String(Files.readAllBytes(Paths.get("levels/intro.txt")));
+            textLabel.setText(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+            textLabel.setText("Error: Unable to load text from file.");
+        }
 
         // Setting the grid position
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -34,7 +46,7 @@ class Pop extends JPanel {
         c.gridy = 0;
         c.gridwidth = 3;
         c.anchor = GridBagConstraints.PAGE_START; 
-        c.insets = new Insets(10, 0, 10, 0);
+        c.insets = new Insets(10, 10, 10, 0);
 
         add(textLabel, c);
 
