@@ -15,12 +15,16 @@ public class Puzzle extends JPanel implements MouseListener {
     private final int TOPLEFTX = 407;
     private final int TOPLEFTY = 200;
 
+    private int[] sequence = {1, 5, 7};
+    private int[] playerSequence;
 
     public Puzzle(int gridSize) {
         this.gridSize = gridSize;
         this.WIDTH = MAX/gridSize;
         this.HEIGHT = MAX/gridSize;
         setBounds(407, 200, 464, 275);
+
+        //create sequence
     }
 
     public int calculateIndex(int x, int y) {
@@ -53,7 +57,7 @@ public class Puzzle extends JPanel implements MouseListener {
         boolean outOfBoundsY = y < 0 || y > MAX;
         if (!outOfBoundsX && !outOfBoundsY) {
             int pressedRect = calculateIndex(x, y);
-            
+
         }
     }
 
