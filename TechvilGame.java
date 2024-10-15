@@ -1,47 +1,53 @@
-// java Program to create a simple JWindow 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.event.*; 
-import javax.swing.*; 
+import javax.swing.JFrame;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
 
-
-class TechvilGame extends JFrame implements ActionListener {
-    JPanel north;
-    JPanel center;
-    JPanel south;
+class TechvilGame extends JFrame implements PanelRemoveListener {
+    private JLayeredPane contentPane;
 
     /** game. */
-    TechvilGame() {
+    public TechvilGame() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         setTitle("Techvil");
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setSize(screenSize.width, screenSize.height);
-        setLayout(new BorderLayout());
+        setSize(1280, 832);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        north = new JPanel();
-        add(north, BorderLayout.NORTH);
+        // Initialize a pane for the main content
+        contentPane = new JLayeredPane();
+        setContentPane(contentPane);
 
-        center = new JPanel();
-        add(center, BorderLayout.CENTER);
+        // Add background to the pane
+        JPanel backgroundPanel = new Background();
+        contentPane.add(backgroundPanel, Integer.valueOf(0));
 
-        south = new JPanel();
-        add(south, BorderLayout.SOUTH);
+        // Add "screen", text and button
+        JPanel popPanel = new Pop(this);
+        contentPane.add(popPanel, Integer.valueOf(1));
+
+        // Add GIF
+        JPanel gifCoffee = new Gif();
+        contentPane.add(gifCoffee, Integer.valueOf(2));
 
         setVisible(true);
         setResizable(false);
     }
-    
-
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
-    } 
+    public void removePanel(JPanel jPanel) {
+        contentPane.remove(jPanel);
+        JPanel puzzle = new Puzzle(10);
+        contentPane.add(puzzle, Integer.valueOf(1));
+        contentPane.revalidate();
+        contentPane.repaint();
+    }
 
     public static void main(String[] args) {
         TechvilGame game = new TechvilGame();
-        Pop p = new Pop();
-    }   
-} 
+    }
+}
