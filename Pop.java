@@ -69,7 +69,7 @@ class Pop extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == okButton) {
+        if (e.getSource() == okButton) {
             panelRemoveListener.removePanel(Pop.this);
         }
     }

@@ -3,6 +3,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+/** Main game class for orchestrating the whole process. */
 class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence {
     private JLayeredPane contentPane;
     private Puzzle puzzle;

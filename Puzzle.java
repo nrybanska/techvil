@@ -6,11 +6,12 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+/** Class for creating and manipulating with the puzzle grid. */
 public class Puzzle extends JPanel {
-    private final int WIDTH = 464;
-    private final int HEIGHT = 275;
-    private final int OFFSET_SIDE = 407;
-    private final int OFFSET_TOP = 200;
+    private final int width = 464;
+    private final int height = 275;
+    private final int offsetSide = 407;
+    private final int offsetTop = 200;
 
     private int gridSize;
 
@@ -20,6 +21,7 @@ public class Puzzle extends JPanel {
     PlayerSequence playerSequence;
     private boolean setup = false;
 
+    /** Constructor needing the grid size and also the playerSequence interface. */
     public Puzzle(PlayerSequence playerSequence, int gridSize) {
         this.playerSequence = playerSequence;
         this.gridSize = gridSize;
@@ -27,7 +29,7 @@ public class Puzzle extends JPanel {
 
         setLayout(new GridLayout(gridSize, gridSize));
 
-        setBounds(OFFSET_SIDE, OFFSET_TOP, WIDTH, HEIGHT);
+        setBounds(offsetSide, offsetTop, width, height);
 
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
@@ -73,6 +75,7 @@ public class Puzzle extends JPanel {
         }
     }
 
+    /** Visualizing the created sequence on the grid. */
     public void showSequence(int[] sequence) {
         Timer timer = new Timer(1000, null);  // Create a timer with 1 second delay
 
