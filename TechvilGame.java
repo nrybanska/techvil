@@ -3,8 +3,10 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
-class TechvilGame extends JFrame implements PanelRemoveListener {
+class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence {
     private JLayeredPane contentPane;
+    private Puzzle puzzle;
+    private Sequence sequence;
 
     /** game. */
     public TechvilGame() {
@@ -41,9 +43,17 @@ class TechvilGame extends JFrame implements PanelRemoveListener {
     @Override
     public void removePanel(JPanel jPanel) {
         contentPane.remove(jPanel);
-        Puzzle puzzle = new Puzzle(3);
-        
+        puzzle = new Puzzle(this, 3);
+
         contentPane.add(puzzle, Integer.valueOf(1));
+        sequence = new Sequence(3, 3);
+
+        puzzle.showSequence(sequence.getSequence());
+    }
+
+    @Override
+    public boolean addToPlayerSeq(int index) {
+        return sequence.addToPlayerSeq(index);
     }
 
     public static void main(String[] args) {
