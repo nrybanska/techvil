@@ -41,12 +41,9 @@ class TechvilGame extends JFrame implements PanelRemoveListener {
     @Override
     public void removePanel(JPanel jPanel) {
         contentPane.remove(jPanel);
-        JPanel puzzle = new Puzzle(3);
-        int[] seq = {1, 3, 7};
-
+        Puzzle puzzle = new Puzzle(3);
+        
         contentPane.add(puzzle, Integer.valueOf(1));
-        contentPane.revalidate();
-        contentPane.repaint();
     }
 
     public static void main(String[] args) {
