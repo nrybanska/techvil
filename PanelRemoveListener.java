@@ -3,5 +3,6 @@ import javax.swing.JPanel;
 
 /** Interface to remove panels. */
 public interface PanelRemoveListener {
-    public void removePanel(JPanel jPanel);
+    public void removePanel(boolean delPop);
+    public void resetPanel(boolean delPop);
 }

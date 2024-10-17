@@ -4,10 +4,13 @@ public class Sequence {
     private int[] playerSequence;
     private int currentLen = 0;
 
+    private PanelRemoveListener panelRemoveListener;
+
     /** Constructor for creating the inital sequence. */
-    public Sequence(int sequenceLen, int gridSize) {
+    public Sequence(int sequenceLen, int gridSize, PanelRemoveListener prl) {
         this.sequence = new int[sequenceLen];
         this.playerSequence = new int[sequenceLen];
+        this.panelRemoveListener = prl;
 
         for (int i = 0; i < sequenceLen; i++) {
             this.sequence[i] = (int) Math.round(Math.random() * (Math.pow(gridSize, 2) - 1));
@@ -26,7 +29,7 @@ public class Sequence {
             currentLen++;
 
             if (currentLen == playerSequence.length) {
-                System.out.println(compareSeq());
+                compareSeq();
                 // Add interface to display game status
             }
         } else {
@@ -37,12 +40,14 @@ public class Sequence {
     }
 
     /** Comparing both sequences and returning if they are same. */
-    public boolean compareSeq() {
+    public void compareSeq() {
         for (int i = 0; i < sequence.length; i++) {
             if (sequence[i] != playerSequence[i]) {
-                return false;
+                panelRemoveListener.resetPanel(false);
+                return;
             }
         }
-        return true;
+
+        panelRemoveListener.removePanel(false);
     }
 }

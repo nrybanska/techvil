@@ -6,8 +6,12 @@ import javax.swing.UIManager;
 /** Main game class for orchestrating the whole process. */
 class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence {
     private JLayeredPane contentPane;
+    private JPanel popPanel;
     private Puzzle puzzle;
     private Sequence sequence;
+
+    private final int maxLvl = 5;
+    private int currentLvl = 1;
 
     /** game. */
     public TechvilGame() {
@@ -30,7 +34,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         contentPane.add(backgroundPanel, Integer.valueOf(0));
 
         // Add "screen", text and button
-        JPanel popPanel = new Pop(this);
+        popPanel = new Pop(this);
         contentPane.add(popPanel, Integer.valueOf(1));
 
         // Add GIF
@@ -42,14 +46,43 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     }
 
     @Override
-    public void removePanel(JPanel jPanel) {
-        contentPane.remove(jPanel);
-        puzzle = new Puzzle(this, 3);
+    public void removePanel(boolean delPop) {
+        if (delPop) {
+            int gridSize = 3 + currentLvl;
+            contentPane.remove(popPanel);
+            puzzle = new Puzzle(this, gridSize);
 
-        contentPane.add(puzzle, Integer.valueOf(1));
-        sequence = new Sequence(3, 3);
+            contentPane.add(puzzle, Integer.valueOf(1));
+            sequence = new Sequence(gridSize, gridSize, this);
 
-        puzzle.showSequence(sequence.getSequence());
+            puzzle.showSequence(sequence.getSequence());
+        } else {
+            contentPane.remove(puzzle);
+            popPanel = new Pop(this);
+            contentPane.add(popPanel, Integer.valueOf(1));
+            currentLvl++;
+        }
+        if (currentLvl == maxLvl) {
+
+        }
+    }
+    
+    @Override
+    public void resetPanel(boolean delPop) {
+        if (!delPop) {
+            int gridSize = 3 + currentLvl;
+            contentPane.remove(puzzle);
+            puzzle = new Puzzle(this, gridSize);
+
+            contentPane.add(puzzle, Integer.valueOf(1));
+            sequence = new Sequence(gridSize, gridSize, this);
+
+            puzzle.showSequence(sequence.getSequence());
+        } else {
+            contentPane.remove(popPanel);
+            popPanel = new Pop(this);
+            contentPane.add(popPanel, Integer.valueOf(1));
+        }
     }
 
     @Override

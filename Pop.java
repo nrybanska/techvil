@@ -12,6 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 class Pop extends JPanel implements ActionListener {
+    private final int width = 464;
+    private final int height = 275;
+    private final int offsetSide = 407;
+    private final int offsetTop = 200;
+
+    private final String[] textFiles = {"textfiles/intro.txt"};
+
     JButton okButton;
     PanelRemoveListener panelRemoveListener;
 
@@ -19,19 +26,18 @@ class Pop extends JPanel implements ActionListener {
     public Pop(PanelRemoveListener panelRemoveListener) {
         this.panelRemoveListener = panelRemoveListener;
         
-        // Creating a rectangle
+        // Creating the screen
         setBackground(Color.blue);
-        setOpaque(true);
-        setBounds(407, 200, 464, 275);
+        setBounds(offsetSide, offsetTop, width, height);        
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         
         // Adding Text
         JLabel textLabel = new JLabel();
         textLabel.setForeground(Color.WHITE);
-        //textLabel.setLineWrap(true);
+
         try {
-            String content = new String(Files.readAllBytes(Paths.get("levels/intro.txt")));
+            String content = new String(Files.readAllBytes(Paths.get(textFiles[0])));
             textLabel.setText(content);
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,7 +76,7 @@ class Pop extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == okButton) {
-            panelRemoveListener.removePanel(Pop.this);
+            panelRemoveListener.removePanel(true);
         }
     }
 }

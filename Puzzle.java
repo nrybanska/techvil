@@ -82,6 +82,7 @@ public class Puzzle extends JPanel {
         timer.addActionListener(e -> {
             if (currentIndex < sequence.length) {
                 int seqValue = sequence[currentIndex];
+                System.out.println("curr value: " + seqValue);
 
                 // Calculate the row and column of the square in the grid
                 int xIndex = seqValue / gridSize;
