@@ -9,6 +9,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     private JPanel popPanel;
     private Puzzle puzzle;
     private Sequence sequence;
+    private Background backgroundPanel;
 
     private final int maxLvl = 5;
     private int currentLvl = 1;
@@ -29,20 +30,24 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         contentPane = new JLayeredPane();
         setContentPane(contentPane);
 
-        // Add background to the pane
-        JPanel backgroundPanel = new Background();
-        contentPane.add(backgroundPanel, Integer.valueOf(0));
+        // Create and add Background panel
+        backgroundPanel = new Background(currentLvl);
+        contentPane.add(backgroundPanel, Integer.valueOf(0)); 
 
-        // Add "screen", text and button
+        // Add pop-up panel (overlay)
         popPanel = new Pop(this);
-        contentPane.add(popPanel, Integer.valueOf(1));
+        contentPane.add(popPanel, Integer.valueOf(1)); 
 
         // Add GIF
         JPanel gifCoffee = new Gif();
-        contentPane.add(gifCoffee, Integer.valueOf(2));
+        contentPane.add(gifCoffee, Integer.valueOf(2)); 
 
         setVisible(true);
         setResizable(false);
+    }
+
+    public int getCurrentLvl() {
+        return currentLvl;
     }
 
     @Override
@@ -50,23 +55,32 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         if (delPop) {
             int gridSize = 3 + currentLvl;
             contentPane.remove(popPanel);
-            puzzle = new Puzzle(this, gridSize);
 
-            contentPane.add(puzzle, Integer.valueOf(1));
+            puzzle = new Puzzle(this, gridSize);
             sequence = new Sequence(gridSize, gridSize, this);
 
+            contentPane.add(puzzle, Integer.valueOf(1)); 
             puzzle.showSequence(sequence.getSequence());
+
+            contentPane.revalidate();
+            contentPane.repaint();
         } else {
             contentPane.remove(puzzle);
             popPanel = new Pop(this);
-            contentPane.add(popPanel, Integer.valueOf(1));
+            contentPane.add(popPanel, Integer.valueOf(1)); 
             currentLvl++;
+
+            backgroundPanel.setLevel(currentLvl); 
+
+            contentPane.revalidate();
+            contentPane.repaint();
         }
+
         if (currentLvl == maxLvl) {
 
         }
     }
-    
+
     @Override
     public void resetPanel(boolean delPop) {
         if (!delPop) {
@@ -74,14 +88,20 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
             contentPane.remove(puzzle);
             puzzle = new Puzzle(this, gridSize);
 
-            contentPane.add(puzzle, Integer.valueOf(1));
+            contentPane.add(puzzle, Integer.valueOf(1)); 
             sequence = new Sequence(gridSize, gridSize, this);
 
             puzzle.showSequence(sequence.getSequence());
+
+            contentPane.revalidate();
+            contentPane.repaint();
         } else {
             contentPane.remove(popPanel);
             popPanel = new Pop(this);
-            contentPane.add(popPanel, Integer.valueOf(1));
+            contentPane.add(popPanel, Integer.valueOf(1)); 
+
+            contentPane.revalidate();
+            contentPane.repaint();
         }
     }
 
