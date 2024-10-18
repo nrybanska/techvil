@@ -1,79 +1,111 @@
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
-public class Puzzle extends JPanel implements MouseListener {
-    private int gridSize;
-    private int WIDTH;
-    private int HEIGHT;
-    private final int OFFSETSIDE = 102;
-    private final int OFFSETTOP = 14;
-    private final int MAX = 250;
+/** Class for creating and manipulating with the puzzle grid. */
+public class Puzzle extends JPanel {
+    private final int width = 464;
+    private final int height = 275;
+    private final int offsetSide = 407;
+    private final int offsetTop = 200;
 
-    private final int TOPLEFTX = 407;
-    private final int TOPLEFTY = 200;
+    private final int gridSize;
 
+    private final JPanel[][] gridPanel;
+    private int currentIndex;
 
-    public Puzzle(int gridSize) {
+    PlayerSequence playerSequence;
+    private boolean setup = false;
+
+    /** Constructor needing the grid size and also the playerSequence interface. */
+    public Puzzle(PlayerSequence playerSequence, int gridSize) {
+        this.playerSequence = playerSequence;
         this.gridSize = gridSize;
-        this.WIDTH = MAX/gridSize;
-        this.HEIGHT = MAX/gridSize;
-        setBounds(407, 200, 464, 275);
-    }
+        this.gridPanel = new JPanel[gridSize][gridSize];
 
-    public int calculateIndex(int x, int y) {
-        int xIndex = x % WIDTH;
-        int yIndex = y % HEIGHT;
+        setLayout(new GridLayout(gridSize, gridSize));
 
-        int finalIndex = yIndex * gridSize + xIndex;     
-
-        return finalIndex;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.setColor(Color.green);
+        setBounds(offsetSide, offsetTop, width, height);
 
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
-                g.drawRect(j*WIDTH+OFFSETSIDE, i*HEIGHT+OFFSETTOP, WIDTH, HEIGHT);
+                JPanel square = new JPanel();
+                int index = i * gridSize + j;
+
+                square.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                square.setBackground(Color.green);
+
+                square.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        clickSquare(index);
+                    }
+                });
+
+                gridPanel[i][j] = square;
+                add(square);
+            }
+            
+        }
+
+        //create sequence
+    }
+
+    private void clickSquare(int index) {
+        if (setup) {
+            boolean added = playerSequence.addToPlayerSeq(index);
+
+            if (added) {
+                int xIndex = index / gridSize;
+                int yIndex = index % gridSize;
+
+                // Change the current square's color to red
+                gridPanel[xIndex][yIndex].setBackground(Color.orange);
+
+                Timer resetTimer = new Timer(350, resetEvent -> {
+                    gridPanel[xIndex][yIndex].setBackground(Color.green);
+                });
+                resetTimer.setRepeats(false);  // Run only once
+                resetTimer.start();
             }
         }
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        int x = e.getX() - (TOPLEFTX+OFFSETSIDE);
-        int y = e.getY() - (TOPLEFTY+OFFSETTOP);
+    /** Visualizing the created sequence on the grid. */
+    public void showSequence(int[] sequence) {
+        Timer timer = new Timer(1000, null);  // Create a timer with 1 second delay
 
-        boolean outOfBoundsX = x < 0 || x > MAX;
-        boolean outOfBoundsY = y < 0 || y > MAX;
-        if (!outOfBoundsX && !outOfBoundsY) {
-            int pressedRect = calculateIndex(x, y);
-            
-        }
-    }
+        timer.addActionListener(e -> {
+            if (currentIndex < sequence.length) {
+                int seqValue = sequence[currentIndex];
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+                // Calculate the row and column of the square in the grid
+                int xIndex = seqValue / gridSize;
+                int yIndex = seqValue % gridSize;
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+                // Change the current square's color to red
+                gridPanel[xIndex][yIndex].setBackground(Color.red);
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
-    @Override
-    public void mouseExited(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+                Timer resetTimer = new Timer(500, resetEvent -> {
+                    gridPanel[xIndex][yIndex].setBackground(Color.green);
+                });
+                resetTimer.setRepeats(false);  // Run only once
+                resetTimer.start();
+                // Increment the index to point to the next square in the sequence
+                currentIndex++;
+            } else {
+                // Stop the timer when all squares in the sequence have been updated
+                timer.stop();
+                setup = true;
+            }
+        });
+
+        currentIndex = 0;
+        timer.start();
     }
 }

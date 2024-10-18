@@ -1,10 +1,9 @@
-
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -12,30 +11,38 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-class Pop extends JPanel implements ActionListener {
+class Pop extends JPanel {
+    private final int width = 464;
+    private final int height = 275;
+    private final int offsetSide = 407;
+    private final int offsetTop = 200;
+
+    private final String[] textFiles = {"textfiles/intro.txt"};
+    private final int currentLvl;
+
     JButton okButton;
     PanelRemoveListener panelRemoveListener;
 
     /** Load the popup panel. */
-    public Pop(PanelRemoveListener panelRemoveListener) {
+    public Pop(PanelRemoveListener panelRemoveListener, int currentLvl) {
         this.panelRemoveListener = panelRemoveListener;
+        this.currentLvl = currentLvl;
         
-        // Creating a rectangle
+        // Creating the screen
         setBackground(Color.blue);
-        setOpaque(true);
-        setBounds(407, 200, 464, 275);
+        setBounds(offsetSide, offsetTop, width, height);        
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         
         // Adding Text
         JLabel textLabel = new JLabel();
         textLabel.setForeground(Color.WHITE);
-        //textLabel.setLineWrap(true);
+
         try {
-            String content = new String(Files.readAllBytes(Paths.get("levels/intro.txt")));
+            // !!! Add Text files currentLvl !!!
+            String content = new String(Files.readAllBytes(Paths.get(textFiles[0])));
             textLabel.setText(content);
         } catch (IOException e) {
-            e.printStackTrace();
             textLabel.setText("Error: Unable to load text from file.");
         }
 
@@ -53,7 +60,12 @@ class Pop extends JPanel implements ActionListener {
 
         // Adding Button
         okButton = new JButton("OK");
-        okButton.addActionListener(this);
+        okButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                panelRemoveListener.removePanel(true);
+            }
+        });
 
         // Setting the grid position
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -66,61 +78,5 @@ class Pop extends JPanel implements ActionListener {
         c.gridwidth = 1;
 
         add(okButton, c);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == okButton) {
-            panelRemoveListener.removePanel(Pop.this);
-        }
-
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-class Pop extends JFrame implements ActionListener {
-    // popup
-    Popup p;
-    int width = 400;
-    int height = 400;
-
-    // constructor
-    Pop() {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        JFrame f = new JFrame("pop");
-
-        JLabel l = new JLabel("This is a popup");
-        f.setSize(width, height);
-        f.setLocation((screenSize.width - width) / 2, (screenSize.height - height) / 2);
-        f.setResizable(false);
-        f.setUndecorated(true);
-
-        PopupFactory pf = new PopupFactory();
-
-        JPanel p2 = new JPanel();
-
-        p2.setBackground(Color.red);
-        p2.add(l);
-
-        p = pf.getPopup(f, p2, 180, 100);
-
-        JButton b = new JButton("click");
-
-        b.addActionListener(this);
-
-        JPanel p1 = new JPanel();
-
-        p1.add(b);
-        f.add(p1);
-        // f.show();
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        p.show();
-    }
-
-    // main class
-    public static void main(String args[]) {
-        Pop p = new Pop();
     }
 }
