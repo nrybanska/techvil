@@ -2,8 +2,8 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -11,20 +11,22 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-class Pop extends JPanel implements ActionListener {
+class Pop extends JPanel {
     private final int width = 464;
     private final int height = 275;
     private final int offsetSide = 407;
     private final int offsetTop = 200;
 
     private final String[] textFiles = {"textfiles/intro.txt"};
+    private final int currentLvl;
 
     JButton okButton;
     PanelRemoveListener panelRemoveListener;
 
     /** Load the popup panel. */
-    public Pop(PanelRemoveListener panelRemoveListener) {
+    public Pop(PanelRemoveListener panelRemoveListener, int currentLvl) {
         this.panelRemoveListener = panelRemoveListener;
+        this.currentLvl = currentLvl;
         
         // Creating the screen
         setBackground(Color.blue);
@@ -37,10 +39,10 @@ class Pop extends JPanel implements ActionListener {
         textLabel.setForeground(Color.WHITE);
 
         try {
+            // !!! Add Text files currentLvl !!!
             String content = new String(Files.readAllBytes(Paths.get(textFiles[0])));
             textLabel.setText(content);
         } catch (IOException e) {
-            e.printStackTrace();
             textLabel.setText("Error: Unable to load text from file.");
         }
 
@@ -58,7 +60,12 @@ class Pop extends JPanel implements ActionListener {
 
         // Adding Button
         okButton = new JButton("OK");
-        okButton.addActionListener(this);
+        okButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                panelRemoveListener.removePanel(true);
+            }
+        });
 
         // Setting the grid position
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -71,12 +78,5 @@ class Pop extends JPanel implements ActionListener {
         c.gridwidth = 1;
 
         add(okButton, c);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == okButton) {
-            panelRemoveListener.removePanel(true);
-        }
     }
 }

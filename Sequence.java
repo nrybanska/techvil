@@ -1,10 +1,10 @@
 /** Class for creating and altering both player and base sequence. */
 public class Sequence {
-    private int[] sequence;
-    private int[] playerSequence;
+    private final int[] sequence;
+    private final int[] playerSequence;
     private int currentLen = 0;
 
-    private PanelRemoveListener panelRemoveListener;
+    private final PanelRemoveListener panelRemoveListener;
 
     /** Constructor for creating the inital sequence. */
     public Sequence(int sequenceLen, int gridSize, PanelRemoveListener prl) {

@@ -13,9 +13,9 @@ public class Puzzle extends JPanel {
     private final int offsetSide = 407;
     private final int offsetTop = 200;
 
-    private int gridSize;
+    private final int gridSize;
 
-    private JPanel[][] gridPanel;
+    private final JPanel[][] gridPanel;
     private int currentIndex;
 
     PlayerSequence playerSequence;
@@ -82,7 +82,6 @@ public class Puzzle extends JPanel {
         timer.addActionListener(e -> {
             if (currentIndex < sequence.length) {
                 int seqValue = sequence[currentIndex];
-                System.out.println("curr value: " + seqValue);
 
                 // Calculate the row and column of the square in the grid
                 int xIndex = seqValue / gridSize;

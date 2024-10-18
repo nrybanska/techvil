@@ -1,18 +1,19 @@
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 /** Main game class for orchestrating the whole process. */
 class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence {
-    private JLayeredPane contentPane;
-    private JPanel popPanel;
+    private final JLayeredPane contentPane;
+    private Background backgroundPanel;
+    private Pop popPanel;
+    private Gif gifPanel;
     private Puzzle puzzle;
     private Sequence sequence;
     private Background backgroundPanel;
 
     private final int maxLvl = 5;
-    private int currentLvl = 1;
+    private int currentLvl = 0;
 
     /** game. */
     public TechvilGame() {
@@ -30,17 +31,17 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         contentPane = new JLayeredPane();
         setContentPane(contentPane);
 
-        // Create and add Background panel
+        // Add background to the pane
         backgroundPanel = new Background(currentLvl);
-        contentPane.add(backgroundPanel, Integer.valueOf(0)); 
+        contentPane.add(backgroundPanel, Integer.valueOf(0));
 
         // Add pop-up panel (overlay)
-        popPanel = new Pop(this);
-        contentPane.add(popPanel, Integer.valueOf(1)); 
+        popPanel = new Pop(this, currentLvl);
+        contentPane.add(popPanel, Integer.valueOf(1));
 
         // Add GIF
-        JPanel gifCoffee = new Gif();
-        contentPane.add(gifCoffee, Integer.valueOf(2)); 
+        gifPanel = new Gif();
+        contentPane.add(gifPanel, Integer.valueOf(2));
 
         setVisible(true);
         setResizable(false);
@@ -53,32 +54,40 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     @Override
     public void removePanel(boolean delPop) {
         if (delPop) {
+            // Calculating the new grid size (difficulty)
             int gridSize = 3 + currentLvl;
+
+            // Removing panel
             contentPane.remove(popPanel);
 
+            // Creating new panel and sequence
             puzzle = new Puzzle(this, gridSize);
             sequence = new Sequence(gridSize, gridSize, this);
 
-            contentPane.add(puzzle, Integer.valueOf(1)); 
+            // Adding the panel and visualizing the sequence
+            contentPane.add(puzzle, Integer.valueOf(1));
             puzzle.showSequence(sequence.getSequence());
-
-            contentPane.revalidate();
-            contentPane.repaint();
         } else {
-            contentPane.remove(puzzle);
-            popPanel = new Pop(this);
-            contentPane.add(popPanel, Integer.valueOf(1)); 
+            // Incrementing the level
             currentLvl++;
 
-            backgroundPanel.setLevel(currentLvl); 
+            // Removing old puzzle
+            contentPane.remove(puzzle);
 
-            contentPane.revalidate();
-            contentPane.repaint();
+            // Creating new panel
+            popPanel = new Pop(this, currentLvl);
+            contentPane.add(popPanel, Integer.valueOf(1)); 
+            
+            // Changing the background picture
+            backgroundPanel.setLevel(currentLvl); 
         }
 
         if (currentLvl == maxLvl) {
 
         }
+      
+        contentPane.revalidate();
+        contentPane.repaint();
     }
 
     @Override
@@ -92,17 +101,16 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
             sequence = new Sequence(gridSize, gridSize, this);
 
             puzzle.showSequence(sequence.getSequence());
-
-            contentPane.revalidate();
-            contentPane.repaint();
         } else {
             contentPane.remove(popPanel);
-            popPanel = new Pop(this);
-            contentPane.add(popPanel, Integer.valueOf(1)); 
 
-            contentPane.revalidate();
-            contentPane.repaint();
+            popPanel = new Pop(this, currentLvl);
+          
+            contentPane.add(popPanel, Integer.valueOf(1));
         }
+      
+        contentPane.revalidate();
+        contentPane.repaint();
     }
 
     @Override

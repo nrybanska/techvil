@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 /** Javadoc. */
 public class Background extends JPanel {
-    int level;
+    private int level;
 
     public Background(int level) {
         this.level = level;
@@ -21,6 +21,7 @@ public class Background extends JPanel {
         super.paintComponent(g);
 
         ImageIcon background = new ImageIcon("levels/" + level + ".png");
+
         g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), null);
     }
 }
