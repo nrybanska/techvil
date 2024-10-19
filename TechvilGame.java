@@ -10,7 +10,6 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     private Gif gifPanel;
     private Puzzle puzzle;
     private Sequence sequence;
-    private Background backgroundPanel;
 
     private final int maxLvl = 5;
     private int currentLvl = 0;
