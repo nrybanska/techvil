@@ -13,7 +13,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     private Sequence sequence;
 
     private final int maxLvl = 5;
-    private int currentLvl = 1;
+    private int currentLvl = 4;
 
     /** game. */
     public TechvilGame() {
@@ -61,12 +61,24 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         } else {
             Message mes = new Message(messageNum); 
             contentPane.add(mes, Integer.valueOf(3)); 
+            
+            int delay;
+            switch (messageNum) {
+                case 3:
+                    delay = 4000;
+                    break;
+                default:
+                    delay = 2000;
+            }
 
-            Timer resetTimer = new Timer(2000, resetEvent -> {
+
+            Timer resetTimer = new Timer(delay, resetEvent -> {
                 contentPane.remove(mes);
                 revalidate();
                 repaint();
-                if (removePanel) {
+                if (currentLvl == maxLvl) {
+                    quitGame();
+                } else if (removePanel){
                     removePanel(delPop);
                 } else {
                     resetPanel(delPop);
@@ -80,7 +92,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     private void removePanel(boolean delPop) {
         if (delPop) {
             // Calculating the new grid size (difficulty)
-            int gridSize = currentLvl;
+            int gridSize = 1;//3 + currentLvl;
 
             // Removing panel
             contentPane.remove(popPanel);
@@ -108,7 +120,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         }
 
         revalidate();
-        repaint(); 
+        repaint();
     }
 
     private void resetPanel(boolean delPop) {
@@ -133,14 +145,16 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         contentPane.repaint();
     }
 
+    private void quitGame() {
+        dispose();
+    }
+
     @Override
     public void changePanel(boolean delPop, int messageNum, boolean removePanel) {
-        showMessage(delPop, messageNum, removePanel);
-
-        if (currentLvl == maxLvl && !delPop) {
-            System.out.println("You won");
-            dispose();
+        if (currentLvl == maxLvl && !delPop && removePanel) {
+            messageNum = 3;
         }
+        showMessage(delPop, messageNum, removePanel);
     }
 
     @Override

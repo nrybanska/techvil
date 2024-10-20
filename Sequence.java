@@ -28,9 +28,9 @@ public class Sequence {
             playerSequence[currentLen] = index;
             currentLen++;
 
+            // Compare the sequences once they are the same size
             if (currentLen == playerSequence.length) {
                 compareSeq();
-                // Add interface to display game status
             }
         } else {
             return false;
