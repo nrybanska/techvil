@@ -67,6 +67,9 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
             contentPane.add(puzzle, Integer.valueOf(1));
             puzzle.showSequence(sequence.getSequence());
         } else {
+            Message mes = new Message(1);
+            contentPane.add(mes, Integer.valueOf(3));
+            
             // Incrementing the level
             currentLvl++;
 
