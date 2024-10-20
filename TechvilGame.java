@@ -80,7 +80,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     private void removePanel(boolean delPop) {
         if (delPop) {
             // Calculating the new grid size (difficulty)
-            int gridSize = 3 + currentLvl;
+            int gridSize = currentLvl;
 
             // Removing panel
             contentPane.remove(popPanel);
@@ -137,7 +137,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     public void changePanel(boolean delPop, int messageNum, boolean removePanel) {
         showMessage(delPop, messageNum, removePanel);
 
-        if (currentLvl == maxLvl) {
+        if (currentLvl == maxLvl && !delPop) {
             System.out.println("You won");
             dispose();
         }

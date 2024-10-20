@@ -18,7 +18,7 @@ public class Message extends JPanel {
                 message = "<html><h1>Great job, that is correct!</h1></html>";
                 break;
             case 2:
-                message = "Oh no, try again.";
+                message = "<html><h1>Oh no, try again :(</h1></html>";
                 break;
             case 3:
                 message = "<html><h1>Congratulations you won!</h1><p>(but at what cost)</p></html>";
