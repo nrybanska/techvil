@@ -4,8 +4,8 @@ import javax.swing.JPanel;
 
 /** Showing small messages on the screen. */
 public class Message extends JPanel {
-    private final int x = 500;
-    private final int y = 250;
+    private final int x = 440;
+    private final int y = 270;
     private final int width = 400;
     private final int height = 100;
 

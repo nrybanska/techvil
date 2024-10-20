@@ -43,11 +43,11 @@ public class Sequence {
     public void compareSeq() {
         for (int i = 0; i < sequence.length; i++) {
             if (sequence[i] != playerSequence[i]) {
-                panelRemoveListener.resetPanel(false);
+                panelRemoveListener.changePanel(false, 0, false);
                 return;
             }
         }
 
-        panelRemoveListener.removePanel(false);
+        panelRemoveListener.changePanel(false, 1, true);
     }
 }
