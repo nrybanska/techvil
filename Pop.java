@@ -17,7 +17,7 @@ class Pop extends JPanel {
     private final int offsetSide = 407;
     private final int offsetTop = 200;
 
-    private final String[] textFiles = {"textfiles/intro.txt"};
+    private final String[] textFiles = {"textfiles/1.txt"};
     private final int currentLvl;
 
     JButton okButton;
