@@ -6,11 +6,13 @@ import javax.swing.JPanel;
 public class Background extends JPanel {
     private int level;
 
+    /** Setting the current level and size. */
     public Background(int level) {
         this.level = level;
         setBounds(0, 0, 1280, 832);
     }
 
+    /** Setter function for changing level value. */
     public void setLevel(int newLevel) {
         this.level = newLevel;
         repaint(); 

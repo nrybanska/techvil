@@ -11,6 +11,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     private Gif gifPanel;
     private Puzzle puzzle;
     private Sequence sequence;
+    private FadePanel fadePanel;
 
     private final int maxLvl = 5;
     private int currentLvl = 1;
@@ -60,17 +61,12 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
             }
         } else {
             Message mes = new Message(messageNum); 
+            fadePanel = new FadePanel();
             contentPane.add(mes, Integer.valueOf(3)); 
+            contentPane.add(fadePanel, Integer.valueOf(4)); 
             
-            int delay;
-            switch (messageNum) {
-                case 3:
-                    delay = 40000;
-                    break;
-                default:
-                    delay = 2000;
-            }
-
+            // This is the "deeply nested statement"!!!
+            int delay = messageNum == 3 ? 40000 : 2000;
 
             Timer resetTimer = new Timer(delay, resetEvent -> {
                 contentPane.remove(mes);
@@ -117,6 +113,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
 
             // Changing the background picture
             backgroundPanel.setLevel(currentLvl);
+            contentPane.remove(fadePanel);
         }
 
         revalidate();
