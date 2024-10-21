@@ -9,7 +9,7 @@ import javax.swing.Timer;
 
 /** Class to add a black fading overlay. */
 public final class FadePanel extends JPanel implements ActionListener {
-    Timer alphaTimer = new Timer(20, this);
+    Timer alphaTimer = new Timer(15, this);
     float alpha = 0;
     float direct = 1f;
 
