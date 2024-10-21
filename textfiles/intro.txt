@@ -1,5 +1,11 @@
-<html><h2>Welcome</h2>Lorem ipsum dolor sit amet,
-consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
-nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit</html>
+<html>
+<h2 >Dear Employee,</h2>
+ <p>welcome to Techvil! We are excited to have you join our dynamic team. 
+ Techvil is a cutting-edge tech company where every task you complete 
+ helps us push the boundaries of innovation. Here at Techvil, we value your work. 
+ By completing and hitting milestones, you’ll progress within the company 
+ and unlock new responsibilities along the way. Each challenge you complete 
+ brings you closer to achieving your career dreams.</p>
+<br>
+<p>Get ready to level up - your success is our success!</p>
+</html>

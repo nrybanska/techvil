@@ -13,7 +13,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     private Sequence sequence;
 
     private final int maxLvl = 5;
-    private int currentLvl = 4;
+    private int currentLvl = 1;
 
     /** game. */
     public TechvilGame() {
@@ -65,7 +65,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
             int delay;
             switch (messageNum) {
                 case 3:
-                    delay = 4000;
+                    delay = 40000;
                     break;
                 default:
                     delay = 2000;
@@ -77,7 +77,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
                 revalidate();
                 repaint();
                 if (currentLvl == maxLvl) {
-                    quitGame();
+                    System.out.println("You won!");
                 } else if (removePanel){
                     removePanel(delPop);
                 } else {
@@ -92,7 +92,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     private void removePanel(boolean delPop) {
         if (delPop) {
             // Calculating the new grid size (difficulty)
-            int gridSize = 1;//3 + currentLvl;
+            int gridSize = 3 + currentLvl;
 
             // Removing panel
             contentPane.remove(popPanel);
@@ -143,10 +143,6 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
       
         contentPane.revalidate();
         contentPane.repaint();
-    }
-
-    private void quitGame() {
-        dispose();
     }
 
     @Override
