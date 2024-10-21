@@ -28,9 +28,9 @@ public class Sequence {
             playerSequence[currentLen] = index;
             currentLen++;
 
+            // Compare the sequences once they are the same size
             if (currentLen == playerSequence.length) {
                 compareSeq();
-                // Add interface to display game status
             }
         } else {
             return false;
@@ -43,11 +43,11 @@ public class Sequence {
     public void compareSeq() {
         for (int i = 0; i < sequence.length; i++) {
             if (sequence[i] != playerSequence[i]) {
-                panelRemoveListener.resetPanel(false);
+                panelRemoveListener.changePanel(false, 2, false);
                 return;
             }
         }
 
-        panelRemoveListener.removePanel(false);
+        panelRemoveListener.changePanel(false, 1, true);
     }
 }

@@ -63,7 +63,7 @@ class Pop extends JPanel {
         okButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                panelRemoveListener.removePanel(true);
+                panelRemoveListener.changePanel(true, 0, true);
             }
         });
 

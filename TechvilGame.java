@@ -1,5 +1,6 @@
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
+import javax.swing.Timer;
 import javax.swing.UIManager;
 
 /** Main game class for orchestrating the whole process. */
@@ -50,8 +51,45 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         return currentLvl;
     }
 
-    @Override
-    public void removePanel(boolean delPop) {
+    private void showMessage(boolean delPop, int messageNum, boolean removePanel) {
+        if (messageNum == 0) {
+            if (removePanel) {
+                removePanel(delPop);
+            } else {
+                resetPanel(delPop);
+            }
+        } else {
+            Message mes = new Message(messageNum); 
+            contentPane.add(mes, Integer.valueOf(3)); 
+            
+            int delay;
+            switch (messageNum) {
+                case 3:
+                    delay = 40000;
+                    break;
+                default:
+                    delay = 2000;
+            }
+
+
+            Timer resetTimer = new Timer(delay, resetEvent -> {
+                contentPane.remove(mes);
+                revalidate();
+                repaint();
+                if (currentLvl == maxLvl) {
+                    System.out.println("You won!");
+                } else if (removePanel){
+                    removePanel(delPop);
+                } else {
+                    resetPanel(delPop);
+                }
+            });
+            resetTimer.setRepeats(false);  // Run only once
+            resetTimer.start();
+        }
+    }
+
+    private void removePanel(boolean delPop) {
         if (delPop) {
             // Calculating the new grid size (difficulty)
             int gridSize = 3 + currentLvl;
@@ -76,21 +114,16 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
             // Creating new panel
             popPanel = new Pop(this, currentLvl);
             contentPane.add(popPanel, Integer.valueOf(1)); 
-            
+
             // Changing the background picture
-            backgroundPanel.setLevel(currentLvl); 
+            backgroundPanel.setLevel(currentLvl);
         }
 
-        if (currentLvl == maxLvl) {
-
-        }
-      
-        contentPane.revalidate();
-        contentPane.repaint();
+        revalidate();
+        repaint();
     }
 
-    @Override
-    public void resetPanel(boolean delPop) {
+    private void resetPanel(boolean delPop) {
         if (!delPop) {
             int gridSize = 3 + currentLvl;
             contentPane.remove(puzzle);
@@ -110,6 +143,14 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
       
         contentPane.revalidate();
         contentPane.repaint();
+    }
+
+    @Override
+    public void changePanel(boolean delPop, int messageNum, boolean removePanel) {
+        if (currentLvl == maxLvl && !delPop && removePanel) {
+            messageNum = 3;
+        }
+        showMessage(delPop, messageNum, removePanel);
     }
 
     @Override
