@@ -15,7 +15,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     private Gif timerGif;
 
     private final int maxLvl = 5;
-    private int currentLvl = 1;
+    private int currentLvl = 3;
     private boolean fadePresent = false;
 
     /** game. */
@@ -140,7 +140,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
 
             // Stop current timer
             puzzle.terminateGameTimer();
-            
+
             puzzle = new Puzzle(this, gridSize);
 
             contentPane.add(puzzle, Integer.valueOf(1)); 
@@ -182,7 +182,8 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
 
     @Override
     public void addTimerGif() {
-        timerGif = new Gif(1);
+        int gifIndex = currentLvl < 3 ? 1 : 2;
+        timerGif = new Gif(gifIndex);
         contentPane.add(timerGif, Integer.valueOf(3));
     }
 

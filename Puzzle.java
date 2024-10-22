@@ -12,7 +12,7 @@ public class Puzzle extends JPanel {
     private final int height = 275;
     private final int offsetSide = 407;
     private final int offsetTop = 200;
-    private final int maxTime = 16500;
+    private int maxTime;
 
     private final int gridSize;
 
@@ -28,6 +28,7 @@ public class Puzzle extends JPanel {
         this.playerSequence = playerSequence;
         this.gridSize = gridSize;
         this.gridPanel = new JPanel[gridSize][gridSize];
+        this.maxTime = gridSize < 6 ? 16500 : 21000;
 
         setLayout(new GridLayout(gridSize, gridSize));
 
