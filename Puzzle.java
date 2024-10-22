@@ -12,7 +12,7 @@ public class Puzzle extends JPanel {
     private final int height = 275;
     private final int offsetSide = 407;
     private final int offsetTop = 200;
-    private final int maxTime = 5000;
+    private final int maxTime = 16500;
 
     private final int gridSize;
 
@@ -21,6 +21,7 @@ public class Puzzle extends JPanel {
 
     PlayerSequence playerSequence;
     private boolean setup = false;
+    Timer gameTimer;
 
     /** Constructor needing the grid size and also the playerSequence interface. */
     public Puzzle(PlayerSequence playerSequence, int gridSize) {
@@ -116,7 +117,7 @@ public class Puzzle extends JPanel {
     }
 
     private void startGameTimer() {
-        Timer gameTimer = new Timer(maxTime, null);
+        gameTimer = new Timer(maxTime, null);
         gameTimer.addActionListener(event -> {
             // Once the time runs out the puzzle is reset
             playerSequence.addToPlayerSeq(-1);
@@ -125,5 +126,9 @@ public class Puzzle extends JPanel {
 
         playerSequence.addTimerGif();
         gameTimer.start();
+    }
+
+    public void terminateGameTimer() {
+        gameTimer.stop();
     }
 }

@@ -111,8 +111,12 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
             // Incrementing the level
             currentLvl++;
 
-            // Removing old puzzle
+            // Removing old puzzle and Timer
             contentPane.remove(puzzle);
+            contentPane.remove(timerGif);
+
+            // Stop current timer
+            puzzle.terminateGameTimer();
 
             // Creating new panel
             popPanel = new Pop(this, currentLvl);
@@ -128,8 +132,15 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
 
     private void resetPanel(boolean delPop) {
         if (!delPop) {
+            //recalculate the gridSize
             int gridSize = 3 + currentLvl;
+            // Remove old components
             contentPane.remove(puzzle);
+            contentPane.remove(timerGif);
+
+            // Stop current timer
+            puzzle.terminateGameTimer();
+            
             puzzle = new Puzzle(this, gridSize);
 
             contentPane.add(puzzle, Integer.valueOf(1)); 
