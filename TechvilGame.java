@@ -12,6 +12,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     private Puzzle puzzle;
     private Sequence sequence;
     private FadePanel fadePanel;
+    private Gif timerGif;
 
     private final int maxLvl = 5;
     private int currentLvl = 1;
@@ -42,7 +43,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         contentPane.add(popPanel, Integer.valueOf(1));
 
         // Add GIF
-        gifPanel = new Gif();
+        gifPanel = new Gif(0);
         contentPane.add(gifPanel, Integer.valueOf(2));
 
         setVisible(true);
@@ -157,7 +158,21 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
 
     @Override
     public boolean addToPlayerSeq(int index) {
-        return sequence.addToPlayerSeq(index);
+        if (index == -1) {
+            // Puzzle reset after timer runs out
+            contentPane.remove(timerGif);
+            repaint();
+            changePanel(false, 4, false);
+            return false;
+        } else {
+            return sequence.addToPlayerSeq(index);
+        }
+    }
+
+    @Override
+    public void addTimerGif() {
+        timerGif = new Gif(1);
+        contentPane.add(timerGif, Integer.valueOf(3));
     }
 
     public static void main(String[] args) {

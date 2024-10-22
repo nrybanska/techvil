@@ -37,6 +37,13 @@ public class Message extends JPanel {
                 width = 350;
                 height = 90;
             }
+            case 4 -> {
+                message = "<html><h1>Oh no, your time ran out :(</h1></html>";
+                x = 470;
+                y = 300;
+                width = 340;
+                height = 70;
+            }
             default -> {
                 System.out.println("Error incorrect message type");
                 x = 440;
