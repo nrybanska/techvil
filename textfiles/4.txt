@@ -1,0 +1,12 @@
+<html>
+<h2 >Stay the Course!</h2>
+<p style="text-align: justify;">Dear employee, another level complete. With it comes more responsibility. 
+By now, you’ve likely seen glimpses of how we really operate. 
+We trust you to understand that the end always justifies the means. 
+Whether it’s cutting corners or bending ethics, it’s all for the greater good of progress.
+</p>
+ <br>
+<p>Not everyone has the strength to push forward without doubt, but you do.</p>
+</html>
+
+

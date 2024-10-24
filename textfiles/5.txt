@@ -1,0 +1,11 @@
+<html>
+<h2 >Nearly There!</h2>
+<p style="text-align: justify;">Dear Employee, impressive work, you’re almost at the top! 
+At this point, you must be seeing the full picture. Yes, we’ve taken liberties with labor practices, 
+and yes, some might even call it exploitation. But remember, at Techvil, "Innovation at Any Cost" drives everything we do. 
+The weak fall behind, but those who understand the true nature of success will thrive.
+</p>
+ <br>
+<p>Doubt is a sign of weakness. Focus on what you’re gaining, not what others are losing.</p>
+</html>
+
