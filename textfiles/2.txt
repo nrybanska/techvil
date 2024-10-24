@@ -1,0 +1,10 @@
+<html>
+<h2 >Innovation at Any Cost</h2>
+<p style="text-align: justify;">Dear Employee, congratulations on completing your first level! At Techvil, we believe in "Innovation at Any Cost." 
+Your dedication is already helping us reach new heights, and we knew you’d fit right in. 
+Keep working hard, and soon you’ll see just how much we can achieve together. 
+Don’t worry about the details—focus on results, and the rewards will follow.
+</p>
+ <br>
+<p>After all, true success comes from relentless progress, no matter the price.</p>
+</html>

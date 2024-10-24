@@ -1,0 +1,13 @@
+<html>
+<h2 >Congratulations!</h2>
+<p style="text-align: justify;">Dear Employee, you’ve done it! You’ve reached the top 
+and unlocked the darkest secrets of Techvil. You now know that every sacrifice—ethical 
+or otherwise—was made for the sake of progress. Our methods are harsh, but "Innovation at Any Cost" 
+has led us to power, and now, that power is yours. As CEO, you can continue the legacy, 
+or you can turn your back and lose everything you’ve worked for.
+The choice is yours: control or conscience.
+</p>
+ <br>
+<p>Welcome to the top of the food chain.</p>
+</html>
+
