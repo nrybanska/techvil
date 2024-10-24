@@ -12,6 +12,7 @@ public class Puzzle extends JPanel {
     private final int height = 275;
     private final int offsetSide = 407;
     private final int offsetTop = 200;
+    private int maxTime;
 
     private final int gridSize;
 
@@ -20,17 +21,23 @@ public class Puzzle extends JPanel {
 
     PlayerSequence playerSequence;
     private boolean setup = false;
+    Timer gameTimer;
 
     /** Constructor needing the grid size and also the playerSequence interface. */
     public Puzzle(PlayerSequence playerSequence, int gridSize) {
         this.playerSequence = playerSequence;
         this.gridSize = gridSize;
         this.gridPanel = new JPanel[gridSize][gridSize];
+        this.maxTime = gridSize < 6 ? 16500 : 21000;
 
         setLayout(new GridLayout(gridSize, gridSize));
 
         setBounds(offsetSide, offsetTop, width, height);
 
+        setUpGrid();        
+    }
+
+    private void setUpGrid() {
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
                 JPanel square = new JPanel();
@@ -51,8 +58,6 @@ public class Puzzle extends JPanel {
             }
             
         }
-
-        //create sequence
     }
 
     private void clickSquare(int index) {
@@ -102,10 +107,29 @@ public class Puzzle extends JPanel {
                 // Stop the timer when all squares in the sequence have been updated
                 timer.stop();
                 setup = true;
+
+                // Starting the ingame timer
+                startGameTimer();
             }
         });
 
         currentIndex = 0;
         timer.start();
+    }
+
+    private void startGameTimer() {
+        gameTimer = new Timer(maxTime, null);
+        gameTimer.addActionListener(event -> {
+            // Once the time runs out the puzzle is reset
+            playerSequence.addToPlayerSeq(-1);
+            gameTimer.stop();
+        });
+
+        playerSequence.addTimerGif();
+        gameTimer.start();
+    }
+
+    public void terminateGameTimer() {
+        gameTimer.stop();
     }
 }
