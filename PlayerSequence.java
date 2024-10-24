@@ -1,6 +1,8 @@
-/** Interface to alter the player sequence. */
+/** Inteface for making changes in TechvilGame from Puzzle. */
 public interface PlayerSequence {
+    /** Tries to add the clicked box at index to the sequence of player.*/
     public boolean addToPlayerSeq(int index);
     
+    /** Adds the gif of the timer when the time for solving the puzzle starts. */
     public void addTimerGif();
 }

@@ -11,19 +11,27 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/** Class for creating the "popup" window on the in-game screen. */
 class Pop extends JPanel {
+    // Variables used to define the panel bounds
     private final int width = 464;
     private final int height = 275;
     private final int offsetSide = 407;
     private final int offsetTop = 200;
 
+    // Variables to figure out which text file to read
     private final String[] textFiles = {"textfiles/intro.txt"};
     private final int currentLvl;
 
     JButton okButton;
+
+    // Interface for removing this panel
     PanelRemoveListener panelRemoveListener;
 
-    /** Load the popup panel. */
+    /** Loading the pop panel.
+     * @param panelRemoveListener is the interface passed from TechvilGame
+     * @param currentLvl is the level which is used to load the correct text
+     */
     public Pop(PanelRemoveListener panelRemoveListener, int currentLvl) {
         this.panelRemoveListener = panelRemoveListener;
         this.currentLvl = currentLvl;
@@ -46,7 +54,7 @@ class Pop extends JPanel {
             textLabel.setText("Error: Unable to load text from file.");
         }
 
-        // Setting the grid position
+        // Setting the grid position for the text
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0.5;
         c.weighty = 0.5;
@@ -59,7 +67,10 @@ class Pop extends JPanel {
         add(textLabel, c);
 
         // Adding Button
-        okButton = new JButton("OK");
+        String buttonText = currentLvl == 1 ? "Start game" : "Ok";
+        okButton = new JButton(buttonText);
+
+        // Adding the event listener to the button
         okButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -67,7 +78,7 @@ class Pop extends JPanel {
             }
         });
 
-        // Setting the grid position
+        // Setting the grid position for the button
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 0;
         c.weighty = 1;
