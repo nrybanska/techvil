@@ -9,9 +9,12 @@ import javax.swing.Timer;
 
 /** Class to add a black fading overlay. */
 public final class FadePanel extends JPanel implements ActionListener {
-    Timer alphaTimer = new Timer(15, this);
-    float alpha = 0;
-    float direct = 1f;
+    private final int offsetDelay = 500;
+    private final int mainInterval = 10;
+    private float alpha = 0;
+    private float direct = 1f;
+
+    Timer alphaTimer = new Timer(mainInterval, this);
 
     /** Constructor calling the fade-in. */
     public FadePanel() {
@@ -23,13 +26,25 @@ public final class FadePanel extends JPanel implements ActionListener {
     /** Fade-out decreasing the alpha. */
     public void removeScreen() {
         direct = -1f;
-        alphaTimer.start();
+        Timer offsetTimer = new Timer(offsetDelay, null);
+        offsetTimer.addActionListener(e -> {
+            alphaTimer.start();
+            System.out.println("Starting to remove screen");
+            offsetTimer.stop();
+        });
+        offsetTimer.start();
     }
 
     /** Fade-in increasing the alpha. */
     public void loadScreen() {
         direct = 1f;
-        alphaTimer.start();
+        Timer offsetTimer = new Timer(offsetDelay, null);
+        offsetTimer.addActionListener(e -> {
+            alphaTimer.start();
+            System.out.println("Starting to load screen");
+            offsetTimer.stop();
+        });
+        offsetTimer.start();
     }
 
     @Override
@@ -51,6 +66,7 @@ public final class FadePanel extends JPanel implements ActionListener {
         if (alpha > 1f) {
             alpha = 1f;
             alphaTimer.stop();
+
             removeScreen();
         } else if (alpha < 0) {
             alpha = 0;
