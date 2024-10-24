@@ -19,9 +19,8 @@ class Pop extends JPanel {
     private final int offsetSide = 407;
     private final int offsetTop = 200;
 
-    // Variables to figure out which text file to read
-    private final String[] textFiles = {"textfiles/intro.txt"};
-    private final int currentLvl;
+    // Variable to figure out which text file to read
+    private final int level;
 
     JButton okButton;
 
@@ -34,7 +33,7 @@ class Pop extends JPanel {
      */
     public Pop(PanelRemoveListener panelRemoveListener, int currentLvl) {
         this.panelRemoveListener = panelRemoveListener;
-        this.currentLvl = currentLvl;
+        this.level = currentLvl;
         
         // Creating the screen
         setBackground(Color.blue);
@@ -46,9 +45,10 @@ class Pop extends JPanel {
         JLabel textLabel = new JLabel();
         textLabel.setForeground(Color.WHITE);
 
+        // Reading the text from the correct file
         try {
-            // !!! Add Text files currentLvl !!!
-            String content = new String(Files.readAllBytes(Paths.get(textFiles[0])));
+            String filePath = "textfiles/" + level + ".txt";
+            String content = new String(Files.readAllBytes(Paths.get(filePath)));
             textLabel.setText(content);
         } catch (IOException e) {
             textLabel.setText("Error: Unable to load text from file.");

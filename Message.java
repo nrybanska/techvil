@@ -4,8 +4,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/** Showing small messages on the screen. */
+/** Class for showing small messages on the screen. */
 public class Message extends JPanel {
+    // Variables for configuring panel bounds
     private final int x;
     private final int y;
     private final int width;
@@ -13,7 +14,9 @@ public class Message extends JPanel {
 
     private String message;
 
-    /** Constructor with a switch to decipher message type. */
+    /** Constructor for setting the correct bounds and content.
+     * @param messageNum is used in a switch to determine content
+     */
     public Message(int messageNum) {
         switch (messageNum) {
             case 1 -> {
@@ -46,13 +49,14 @@ public class Message extends JPanel {
             }
             default -> {
                 System.out.println("Error incorrect message type");
-                x = 440;
-                y = 270;
-                width = 400;
-                height = 100;
+                x = 470;
+                y = 300;
+                width = 340;
+                height = 70;
             }
         }
 
+        // Setting the previously assigned variables
         setBounds(x, y, width, height);
         setBackground(Color.lightGray);
         setBorder(BorderFactory.createLineBorder(Color.black, 2));

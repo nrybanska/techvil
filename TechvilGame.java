@@ -5,21 +5,24 @@ import javax.swing.UIManager;
 
 /** Main game class for orchestrating the whole process. */
 class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence {
+    // Declaring custom classes so they are global
     private final JLayeredPane contentPane;
-    private Background backgroundPanel;
+    private final Background backgroundPanel;
     private Pop popPanel;
-    private Gif gifPanel;
+    private final Gif gifPanel;
     private Puzzle puzzle;
     private Sequence sequence;
     private FadePanel fadePanel;
     private Gif timerGif;
 
+    // Variables for level progression
     private final int maxLvl = 5;
     private int currentLvl = 1;
     private boolean fadePresent = false;
 
-    /** game. */
+    /** Constructor setting the initial game screen. */
     public TechvilGame() {
+        // Trying to set a crossplatform ui to limit the deviations from positions of elements
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception e) {
@@ -30,11 +33,11 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         setSize(1280, 832);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        // Initialize a pane for the main content
+        // Initializing the pane for the main content
         contentPane = new JLayeredPane();
         setContentPane(contentPane);
 
-        // Add background to the pane
+        // Adding background to the pane
         backgroundPanel = new Background(currentLvl);
         contentPane.add(backgroundPanel, Integer.valueOf(0));
 
@@ -50,44 +53,49 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         setResizable(false);
     }
 
-    public int getCurrentLvl() {
-        return currentLvl;
-    }
-
+    /** Fuction for displaying miscellaneous messages.
+     * @param delPop used to determine what to delete/reset
+     * @param messageNum int for determining the type of message to be displayed
+     * @param removePanel detremining if panel should be removed or reset
+     */
     private void showMessage(boolean delPop, int messageNum, boolean removePanel) {
-        if (messageNum == 0) {
-            if (removePanel) {
-                removePanel(delPop);
-            } else {
-                resetPanel(delPop);
-            }
-        } else {
-            if (messageNum == 1) {
-                handleFadePanel();
-            }            
-
-            Message mes = new Message(messageNum); 
-            
-            contentPane.add(mes, Integer.valueOf(3)); 
-            
-            
-            // This is the "deeply nested statement"!!!
-            int delay = messageNum == 3 ? 40000 : 2000;
-
-            Timer resetTimer = new Timer(delay, resetEvent -> {
-                contentPane.remove(mes);
-                revalidate();
-                repaint();
-                if (currentLvl == maxLvl) {
-                    System.out.println("You won!");
-                } else if (removePanel){
+        switch (messageNum) {
+            case 0 -> {
+                if (removePanel) {
                     removePanel(delPop);
                 } else {
                     resetPanel(delPop);
                 }
-            });
-            resetTimer.setRepeats(false);  // Run only once
-            resetTimer.start();
+            }
+            
+            default -> {
+                if (messageNum == 1) {
+                    handleFadePanel();
+                }            
+    
+                Message mes = new Message(messageNum); 
+                
+                contentPane.add(mes, Integer.valueOf(3)); 
+                
+                int delay = messageNum == 3 ? 40000 : 2000;
+    
+                Timer resetTimer = new Timer(delay, resetEvent -> {
+                    contentPane.remove(mes);
+                    revalidate();
+                    repaint();
+
+                    // This is the "deeply nested statement"!!!
+                    if (currentLvl == maxLvl) {
+                        System.out.println("You won!");
+                    } else if (removePanel){
+                        removePanel(delPop);
+                    } else {
+                        resetPanel(delPop);
+                    }
+                });
+                resetTimer.setRepeats(false);  // Run only once
+                resetTimer.start();
+            }
         }
     }
 
