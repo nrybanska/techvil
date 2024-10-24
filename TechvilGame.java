@@ -6,10 +6,10 @@ import javax.swing.UIManager;
 /** Main game class for orchestrating the whole process. */
 class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence {
     // Declaring custom classes so they are global
-    private final JLayeredPane contentPane;
-    private final Background backgroundPanel;
+    private JLayeredPane contentPane;
+    private Background backgroundPanel;
     private Pop popPanel;
-    private final Gif gifPanel;
+    private Gif gifPanel;
     private Puzzle puzzle;
     private Sequence sequence;
     private FadePanel fadePanel;
