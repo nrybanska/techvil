@@ -64,7 +64,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
                 if (removePanel) {
                     removePanel(delPop);
                 } else {
-                    resetPanel(delPop);
+                    resetPanel();
                 }
             }
             
@@ -87,10 +87,10 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
                     // This is the "deeply nested statement"!!!
                     if (currentLvl == maxLvl) {
                         System.out.println("You won!");
-                    } else if (removePanel){
+                    } else if (removePanel) {
                         removePanel(delPop);
                     } else {
-                        resetPanel(delPop);
+                        resetPanel();
                     }
                 });
                 resetTimer.setRepeats(false);  // Run only once
@@ -99,6 +99,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         }
     }
 
+    /** Fuction for adding and removing the overlay fading panel. */
     private void handleFadePanel() {
         if (fadePresent) {
             contentPane.remove(fadePanel);
@@ -109,6 +110,9 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         fadePresent = true;
     }
 
+    /** Fuction to remove the current panel and create a new one.
+     * @param delPop is used to determine which exact panel to remove
+     */
     private void removePanel(boolean delPop) {
         if (delPop) {
             // Calculating the new grid size (difficulty)
@@ -147,35 +151,34 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         repaint();
     }
 
-    private void resetPanel(boolean delPop) {
-        if (!delPop) {
-            //recalculate the gridSize
-            int gridSize = 3 + currentLvl;
-            // Remove old components
-            contentPane.remove(puzzle);
-            contentPane.remove(timerGif);
+    /** Fuction to reset the puzzle after a failed attempt. */
+    private void resetPanel() {
+        //recalculate the gridSize
+        int gridSize = 3 + currentLvl;
 
-            // Stop current timer
-            puzzle.terminateGameTimer();
+        // Remove old components
+        contentPane.remove(puzzle);
+        contentPane.remove(timerGif);
 
-            puzzle = new Puzzle(this, gridSize);
+        // Stop current timer
+        puzzle.terminateGameTimer();
 
-            contentPane.add(puzzle, Integer.valueOf(1)); 
-            sequence = new Sequence(gridSize, gridSize, this);
+        puzzle = new Puzzle(this, gridSize);
 
-            puzzle.showSequence(sequence.getSequence());
-        } else {
-            contentPane.remove(popPanel);
+        contentPane.add(puzzle, Integer.valueOf(1)); 
+        sequence = new Sequence(gridSize, gridSize, this);
 
-            popPanel = new Pop(this, currentLvl);
-          
-            contentPane.add(popPanel, Integer.valueOf(1));
-        }
+        puzzle.showSequence(sequence.getSequence());
       
         contentPane.revalidate();
         contentPane.repaint();
     }
 
+    /** Overriding the inteface so that it can be passed to custom classes. 
+     * @param delPop is a boolean for determining if Pop should be deleted or Puzzle
+     * @param messageNum is the int for determining the type of message to be displayed
+     * @param removePanel boolean for detremining if panel should be removed or reset
+    */
     @Override
     public void changePanel(boolean delPop, int messageNum, boolean removePanel) {
         if (currentLvl == maxLvl && !delPop && removePanel) {
@@ -184,6 +187,10 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         showMessage(delPop, messageNum, removePanel);
     }
 
+    /** Overriding the inteface so that it can be passed to custom classes.
+     * @param index of the clicked cell
+     * @return if addition was successful or not
+     */
     @Override
     public boolean addToPlayerSeq(int index) {
         if (index == -1) {
@@ -197,6 +204,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         }
     }
 
+    /** Overriding the inteface so that it can be passed to custom classes. */
     @Override
     public void addTimerGif() {
         int gifIndex = currentLvl < 3 ? 1 : 2;

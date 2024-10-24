@@ -2,17 +2,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-/** Javadoc. */
+/** Class for displaying different GIFs. */
 public class Gif extends JPanel {
+    // Array of all available GIFs
     private final String[] gifPaths = {"gifs/Coffee.gif", "gifs/timer.gif", 
         "gifs/timer2.gif"};
     private final String gifPath;
     
-    /** Javadoc. */
+    /** Constructor for creating GIF.
+     * @param gifIndex used to choose the GIF
+     */
     public Gif(int gifIndex) {
         this.gifPath = gifPaths[gifIndex];
         setOpaque(false);
 
+        // Setting the position of each GIF
         switch (gifIndex) {
             case 0 -> {
                 setBounds(1050, 450, 200, 200);
@@ -28,6 +32,7 @@ public class Gif extends JPanel {
             }
         }
 
+        // Adding the GIF itself
         ImageIcon gifIcon = new ImageIcon(gifPath);
         JLabel gifLabel = new JLabel(gifIcon);
 
