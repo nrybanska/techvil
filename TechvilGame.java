@@ -94,7 +94,6 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     private void handleFadePanel() {
         if (fadePresent) {
             contentPane.remove(fadePanel);
-            System.out.println("Removing fadePanel");
         }
 
         fadePanel = new FadePanel();

@@ -29,7 +29,6 @@ public final class FadePanel extends JPanel implements ActionListener {
         Timer offsetTimer = new Timer(offsetDelay, null);
         offsetTimer.addActionListener(e -> {
             alphaTimer.start();
-            System.out.println("Starting to remove screen");
             offsetTimer.stop();
         });
         offsetTimer.start();
@@ -41,7 +40,6 @@ public final class FadePanel extends JPanel implements ActionListener {
         Timer offsetTimer = new Timer(offsetDelay, null);
         offsetTimer.addActionListener(e -> {
             alphaTimer.start();
-            System.out.println("Starting to load screen");
             offsetTimer.stop();
         });
         offsetTimer.start();
