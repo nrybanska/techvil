@@ -18,7 +18,7 @@ public class Background extends JPanel {
      * @param newLevel level to which we want to change
      */
     public void setLevel(int newLevel) {
-        this.level = newLevel <= 5 ?  newLevel : 5;
+        this.level = newLevel;
         repaint(); 
     }
 

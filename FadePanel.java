@@ -14,11 +14,14 @@ public final class FadePanel extends JPanel implements ActionListener {
     private final int mainInterval = 10;
     private float alpha = 0;
     private float direct = 1f; // variable to adjust for fade-in/fade-out
+    private final int level;
 
     Timer alphaTimer = new Timer(mainInterval, this);
 
     /** Constructor calling the fade-in. */
-    public FadePanel() {
+    public FadePanel(int currentLvl) {
+        this.level = currentLvl;
+
         setBounds(0, 0, 1280, 832);
         setOpaque(false);
         loadScreen();
@@ -55,7 +58,8 @@ public final class FadePanel extends JPanel implements ActionListener {
 
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 
-        g2d.setColor(Color.black);
+        Color color = level == 5 ? Color.red : Color.black;
+        g2d.setColor(color);
         g2d.fillRect(0, 0, 1280, 832);
     }
 

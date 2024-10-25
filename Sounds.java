@@ -6,7 +6,12 @@ import javax.sound.sampled.Clip;
 /** Class for accessing and playing different sounds. */
 public class Sounds {
     // Variables to access available sounds
-    private final String[] soundPaths = {"sounds/sound.aifc", "sounds/countdown.aifc"};
+    private final String countDownSound = "sounds/countdown.aifc";
+    private final String[] memeSounds = {"sounds/myinstants1.aifc", "sounds/myinstants2.aifc", 
+        "sounds/myinstants3.aifc"};
+    private final String windowsSound = "sounds/Windowsxp.aifc";
+    private final String failSound = "sounds/Fail.aifc";
+
     private final String filePath;
 
     private Clip clip;
@@ -16,7 +21,25 @@ public class Sounds {
      * @param sound type of sound to be played
      */
     public Sounds(int sound) {
-        this.filePath = soundPaths[sound];
+        switch (sound) {
+            case 0 -> {
+                int index = (int) Math.round(Math.random() * (memeSounds.length - 1));
+                this.filePath = memeSounds[index];
+            }
+            case 1 -> {
+                this.filePath = windowsSound;
+            }
+            case 2 -> {
+                this.filePath = failSound;
+            }
+            case 3 -> {
+                this.filePath = countDownSound;
+            } 
+            default -> {
+                System.out.println("Error: Incorrect sound type!");
+                filePath = failSound;
+            }
+        }
 
         playSound();
     }
