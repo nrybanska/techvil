@@ -18,7 +18,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
 
     // Variables for level progression
     private final int maxLvl = 5;
-    private int currentLvl = 1;
+    private int currentLvl = 5;
     private boolean fadePresent = false;
 
     /** Constructor setting the initial game screen. */
@@ -86,9 +86,9 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
                     repaint();
 
                     // This is the "deeply nested statement"!!!
-                    if (currentLvl == maxLvl) {
+                    /*if (currentLvl == maxLvl) {
                         System.out.println("You won!");
-                    } else if (removePanel) {
+                    } else*/ if (removePanel) {
                         removePanel(delPop);
                     } else {
                         resetPanel();
@@ -118,7 +118,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     private void removePanel(boolean delPop) {
         if (delPop) {
             // Calculating the new grid size (difficulty)
-            int gridSize = 3 + currentLvl;
+            int gridSize = 2 + currentLvl;
 
             // Removing panel
             contentPane.remove(popPanel);
@@ -157,7 +157,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     /** Fuction to reset the puzzle after a failed attempt. */
     private void resetPanel() {
         //recalculate the gridSize
-        int gridSize = 3 + currentLvl;
+        int gridSize = 2 + currentLvl;
 
         // Remove old components
         contentPane.remove(puzzle);
@@ -185,9 +185,9 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     */
     @Override
     public void changePanel(boolean delPop, int messageNum, boolean removePanel) {
-        if (currentLvl == maxLvl && !delPop && removePanel) {
+        /*if (currentLvl == maxLvl && !delPop && removePanel) {
             messageNum = 3;
-        }
+        }*/
         showMessage(delPop, messageNum, removePanel);
     }
 

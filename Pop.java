@@ -88,6 +88,8 @@ class Pop extends JPanel {
         c.gridy = 1;
         c.gridwidth = 1;
 
-        add(okButton, c);
+        if (level <= 5) {
+            add(okButton, c);
+        }
     }
 }

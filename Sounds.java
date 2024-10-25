@@ -25,11 +25,9 @@ public class Sounds {
     private void playSound() {
         try {
             audioInput = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
-
             clip = AudioSystem.getClip();
             clip.open(audioInput);
             clip.start();
-            System.out.println("Clip started");
         } catch (Exception e) {
             System.out.println(e);
         }
