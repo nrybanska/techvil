@@ -36,14 +36,16 @@ class Pop extends JPanel {
         this.level = currentLvl;
         
         // Creating the screen
-        setBackground(Color.blue);
+        Color color = currentLvl == 6 ? Color.red : Color.blue;
+        setBackground(color);
         setBounds(offsetSide, offsetTop, width, height);        
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         
         // Adding Text
         JLabel textLabel = new JLabel();
-        textLabel.setForeground(Color.WHITE);
+        Color textColor = currentLvl == 6 ? Color.black : Color.white;
+        textLabel.setForeground(textColor);
 
         // Reading the text from the correct file
         try {
@@ -88,6 +90,8 @@ class Pop extends JPanel {
         c.gridy = 1;
         c.gridwidth = 1;
 
-        add(okButton, c);
+        if (level <= 5) {
+            add(okButton, c);
+        }
     }
 }

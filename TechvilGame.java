@@ -6,17 +6,17 @@ import javax.swing.UIManager;
 /** Main game class for orchestrating the whole process. */
 class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence {
     // Declaring custom classes so they are global
-    private final JLayeredPane contentPane;
-    private final Background backgroundPanel;
+    private JLayeredPane contentPane;
+    private Background backgroundPanel;
     private Pop popPanel;
-    private final Gif gifPanel;
+    private Gif gifPanel;
     private Puzzle puzzle;
     private Sequence sequence;
     private FadePanel fadePanel;
     private Gif timerGif;
+    private Sounds sound;
 
     // Variables for level progression
-    private final int maxLvl = 5;
     private int currentLvl = 1;
     private boolean fadePresent = false;
 
@@ -48,6 +48,9 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
         // Add GIF
         gifPanel = new Gif(0);
         contentPane.add(gifPanel, Integer.valueOf(2));
+        
+        // Add loading windows sound
+        sound = new Sounds(1);
 
         setVisible(true);
         setResizable(false);
@@ -83,13 +86,14 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
                     contentPane.remove(mes);
                     revalidate();
                     repaint();
-
-                    // This is the "deeply nested statement"!!!
-                    if (currentLvl == maxLvl) {
-                        System.out.println("You won!");
-                    } else if (removePanel) {
+                    
+                    if (removePanel) {
+                        sound.stop();
+                        sound = new Sounds(0);
                         removePanel(delPop);
                     } else {
+                        sound.stop();
+                        sound = new Sounds(2);
                         resetPanel();
                     }
                 });
@@ -105,7 +109,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
             contentPane.remove(fadePanel);
         }
 
-        fadePanel = new FadePanel();
+        fadePanel = new FadePanel(currentLvl);
         contentPane.add(fadePanel, Integer.valueOf(4)); 
         fadePresent = true;
     }
@@ -116,7 +120,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     private void removePanel(boolean delPop) {
         if (delPop) {
             // Calculating the new grid size (difficulty)
-            int gridSize = 3 + currentLvl;
+            int gridSize = 2 + currentLvl;
 
             // Removing panel
             contentPane.remove(popPanel);
@@ -154,7 +158,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     /** Fuction to reset the puzzle after a failed attempt. */
     private void resetPanel() {
         //recalculate the gridSize
-        int gridSize = 3 + currentLvl;
+        int gridSize = 2 + currentLvl;
 
         // Remove old components
         contentPane.remove(puzzle);
@@ -181,9 +185,6 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     */
     @Override
     public void changePanel(boolean delPop, int messageNum, boolean removePanel) {
-        if (currentLvl == maxLvl && !delPop && removePanel) {
-            messageNum = 3;
-        }
         showMessage(delPop, messageNum, removePanel);
     }
 
@@ -209,6 +210,7 @@ class TechvilGame extends JFrame implements PanelRemoveListener, PlayerSequence 
     public void addTimerGif() {
         int gifIndex = currentLvl < 3 ? 1 : 2;
         timerGif = new Gif(gifIndex);
+        sound = new Sounds(3);
         contentPane.add(timerGif, Integer.valueOf(3));
     }
 
