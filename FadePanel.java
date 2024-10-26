@@ -30,6 +30,8 @@ public final class FadePanel extends JPanel implements ActionListener {
     /** Fade-out decreasing the alpha. */
     public void removeScreen() {
         direct = -1f;
+
+        // Adding an offset to mitigate environment switch glitches
         Timer offsetTimer = new Timer(offsetDelay, null);
         offsetTimer.addActionListener(e -> {
             alphaTimer.start();
@@ -41,6 +43,8 @@ public final class FadePanel extends JPanel implements ActionListener {
     /** Fade-in increasing the alpha. */
     public void loadScreen() {
         direct = 1f;
+
+        // Adding an offset timer to let the player view the message displayed
         Timer offsetTimer = new Timer(offsetDelay, null);
         offsetTimer.addActionListener(e -> {
             alphaTimer.start();
@@ -58,6 +62,7 @@ public final class FadePanel extends JPanel implements ActionListener {
 
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 
+        // Changing the fade panel colour for the last "level"
         Color color = level == 5 ? Color.red : Color.black;
         g2d.setColor(color);
         g2d.fillRect(0, 0, 1280, 832);
@@ -72,6 +77,7 @@ public final class FadePanel extends JPanel implements ActionListener {
             alpha = 1f;
             alphaTimer.stop();
 
+            // Once the fade-in is done the fade-out is called
             removeScreen();
         } else if (alpha < 0) {
             alpha = 0;

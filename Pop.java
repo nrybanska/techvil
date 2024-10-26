@@ -36,14 +36,12 @@ class Pop extends JPanel {
         this.level = currentLvl;
         
         // Creating the screen
-        Color color = currentLvl == 6 ? Color.red : Color.blue;
-        setBackground(color);
-        setBounds(offsetSide, offsetTop, width, height);        
-        setLayout(new GridBagLayout());
+        createScreen();
         GridBagConstraints c = new GridBagConstraints();
         
         // Adding Text
         JLabel textLabel = new JLabel();
+        // Change of text colour for last "level"
         Color textColor = currentLvl == 6 ? Color.black : Color.white;
         textLabel.setForeground(textColor);
 
@@ -90,8 +88,18 @@ class Pop extends JPanel {
         c.gridy = 1;
         c.gridwidth = 1;
 
+        // Not adding the button in the last "level"
         if (level <= 5) {
             add(okButton, c);
         }
+    }
+
+    /** Function to create the initial screen. */
+    private void createScreen() {
+        // Change of colour for last "level"
+        Color color = level == 6 ? Color.red : Color.blue;
+        setBackground(color);
+        setBounds(offsetSide, offsetTop, width, height);        
+        setLayout(new GridBagLayout());
     }
 }

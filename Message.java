@@ -34,13 +34,6 @@ public class Message extends JPanel {
                 height = 70;
             }
             case 3 -> {
-                message = "<html><h1>Congratulations you won!</h1><p>(but at what cost)</p></html>";
-                x = 465;
-                y = 295;
-                width = 350;
-                height = 90;
-            }
-            case 4 -> {
                 message = "<html><h1>Oh no, your time ran out :(</h1></html>";
                 x = 470;
                 y = 300;
